@@ -1,0 +1,162 @@
+
+<!DOCTYPE html>
+<html lang="en" class="about">
+  <head>
+    <title>Kristin Grace Erickson</title>
+    <link rel="stylesheet" href="kevyb_2015/css/kge.css">    
+  </head>
+  <link href='http://fonts.googleapis.com/css?family=Play' rel='stylesheet' type='text/css'>
+  <body>
+    <header><div id="container"></div>
+      <h1></h1>
+      <p>Hi, I'm <strong>Kristin Grace Erickson</strong>.<br>By day, I work as the Technical Coordinator for the Digital Arts and New Media program at the University of California in Santa Cruz. <br><br>Some people know me as... <br>
+     <div class="arrow_bounce"><img src="kevyb_2015/img/arrow_blue.png" width="30"></div></p>
+    </header>
+    <section id="section_1">
+      <h1 arb:id="section_1Title"><a href="http://vimeo.com/album/1483032"><img src="kevyb_2015/img/runmanrun.jpg" width="400px" align="left"></a><img src="kevyb_2015/img/kevy_cursive.gif"></h1>
+      <p arb:id="section_1Text">...a musician and performing artist who recorded and toured a lot between 1999 and 2010. I lived in San Francisco, Berlin, and Los Angeles and also played music in Blectum from Blechdom and Adult Rodeo.<br><br>Music Archive -> <a href="http://www.kevyb.com/audio">www.kevyb.com/audio</a></p>
+    </section>
+    <section id="section_2" height="800"><a href="http://www.kevyb.com/doingy"><img src="kevyb_2015/img/doingy_left.png" align="left" height="800" valign="bottom"></a><a href="http://www.kevyb.com/doingy"><img src="kevyb_2015/img/doingy_right.png" align="right" height="800"></a> 
+      <div><center><video autoplay loop>
+        <source src="kevyb_2015/ani/doingy_shortest.mov" type="video/mp4">
+        Your browser does not support the video tag.
+        </video> <h1 arb:id="section_1Title">DOINGY DOINGY</h1>
+      <p arb:id="section_2Text" style="padding: 0px 226px 0px 226px;">...is the first video game I made in Unity. You can play it online at <br><br><a href="http://www.kevyb.com/doingy">www.kevyb.com/doingy</a></center></div></p>
+
+    </section>
+     <section id="section_3" height="300px">
+     <center><a href="http://www.telebrain.org"><img src="kevyb_2015/img/telebrain.png" width="300"></a></center>
+      <h1 arb:id="section_3Title"></h1>
+      <p arb:id="section_3Text">...is a perpetual work-in-progress online something-or-other real-time browser-based performance instruction paradigm that I will get back to working on soon I hope... I can answer any questions you may have about what it does... <br><br><a href="http://www.telebrain.org">www.telebrain.org</a><br><br></p>
+    </section>
+    <section id="section_4"><a href="http://www.mitpressjournals.org/toc/lmj/-/24"><img src="kevyb_2015/img/lmj.jpg" align="left"></a>
+      <h1 arb:id="section_4Title">Synthesizing Performance</h1>
+      <p arb:id="section_4Text">...is the name of the article I wrote that was recently published in the <a href="http://www.mitpressjournals.org/toc/lmj/-/24">Leonardo Music Journal</a> (Vol. 24, December 2014).<br><br><img src="kevyb_2015/img/abstract.png" width="300px"></p>
+    </section>
+   
+    <section id="section_5"><img src="kevyb_2015/img/kge.png" align="left" width="266" valign="bottom">
+      <h1 arb:id="section_5Title">Thank you for visiting!</h1>
+<p arb:id="section_5Text2"><a href="https://docs.google.com/a/ucsc.edu/document/d/1poN58I0HxDrXZiXxWMHO3IO74gVw470OVaZhQVeNw2w/edit?usp=sharing">View Resume (short)</a><br><br></p>
+<p arb:id="section_5Text2"><a href="https://docs.google.com/document/d/1s6B0BixMcCRkakjm1Ud-LBnKp5bRWR9a7e0jZvP_-W4/edit?usp=sharing">View Curriculum Vitae (long)</a><br><br></p>
+      <p arb:id="section_5Text">contact: blechdom at gmail<br><br></p>
+    </section>
+    <script src="kevyb_2015/js/kge.js"></script>
+    <script>
+      var $ = require('component-jquery')
+        , sections = $('section')
+        , timer
+        , touch = 'ontouchstart' in window || navigator.msMaxTouchPoints
+        , ol = $('<ol></ol>');
+        
+      sections.each(function(){
+        var id = $(this).attr('id');
+        ol.append('<li><a href="#'+id+'"></a></li>')
+      })
+      ol.find('a').click(function(){
+        $('body').css('paddingTop', $('header').height());
+        sections.removeClass('sticky');
+        var t = $($(this).attr('href')).offset().top;
+        $(window).scrollTop(t);
+      })
+      $('body').append(ol);
+      
+      if( touch ){
+        $('html').addClass('touch')
+      } else {
+        var wheight = 0;
+        $(window).resize(function(){
+          wheight = $(window).height()
+          sections.removeAttr('style');
+          sections.each( function(){
+            if($(this).outerHeight() < wheight)
+              $(this).css('height',wheight)
+          })
+          $(window).scroll();
+        }).resize();
+        
+        $(window).scroll(function(){
+          var scrollTop = $(window).scrollTop()
+            , padding = np = $('header').height()
+            , changed = $();
+          $('body').css('paddingTop', padding);
+          sections.removeClass('sticky').each( function(){
+            var el = $(this)
+              , oh = el.outerHeight();
+            if(el.offset().top + oh <= wheight + scrollTop) {
+              np += oh;
+              changed = changed.add(this);
+            }
+            if(el.offset().top - (oh/2) < scrollTop) {
+              var id = el.attr('id');
+              $('[href="#'+id+'"]').parent().addClass('active')
+              .siblings().removeClass('active');
+            }
+          })
+          if(np != padding) {
+            $('body').css('paddingTop', np);
+            changed.addClass('sticky');
+          }
+        }).scroll();
+      }
+    </script>
+      <script src="kevyb_2015/js/three.min.js"></script>
+   <script>
+      var container = document.getElementById( 'container' );
+
+      var scene = new THREE.Scene();
+
+      var camera = new THREE.PerspectiveCamera( 45, container.clientWidth / container.clientHeight, 1, 1000 );
+      camera.setViewOffset( 400, 400, 0, 0, 400, 400);
+      
+      var renderer = new THREE.WebGLRenderer();
+      renderer.setSize( window.innerWidth, window.innerHeight );
+      document.body.appendChild( renderer.domElement );
+
+      var geometry = new THREE.BoxGeometry( 1, 1, 1 );
+      var material = new THREE.MeshBasicMaterial( { color: 0x00ff00, wireframe: true} );
+      var material2 = new THREE.MeshBasicMaterial( { color: 0x00ff00, wireframe: true} );
+      var material3 = new THREE.MeshBasicMaterial( { color: 0x00ff00, wireframe: true} );
+      var cube = new THREE.Mesh( geometry, material );
+      var cube2 = new THREE.Mesh( geometry, material2 );
+      var cube3 = new THREE.Mesh( geometry, material3 );
+
+      scene.add( cube );
+      scene.add( cube2 );
+      scene.add( cube3 );
+      //cube.position = new THREE.Vector3(0, 0, 0);
+
+      function render() {
+        requestAnimationFrame( render );
+        var randomCamera = (15 * Math.random()) + 3;
+        camera.position.z = randomCamera;
+
+        cube.position.x = Math.random()-.5;
+        cube.position.y = Math.random()-.5;
+        cube.rotation.x += .2;
+        cube.rotation.y += .2;
+        cube.material.color.setHex( '0x' + Math.floor(Math.random() * 16777215).toString(16));
+
+        cube2.position.x = Math.random()-.75;
+        cube2.position.y = Math.random()-.75;
+        cube2.rotation.x -= .1;
+        cube2.rotation.y -= .1;
+        cube2.material.color.setHex( '0x' + Math.floor(Math.random() * 16777215).toString(16));
+
+        cube3.position.x = Math.random()-.25;
+        cube3.position.y = Math.random()-.75;
+        cube3.rotation.x += .1;
+        cube3.rotation.y -= .1;
+        cube3.material.color.setHex( '0x' + Math.floor(Math.random() * 16777215).toString(16));
+    
+
+        renderer.render( scene, camera );
+      }
+
+      renderer.setSize( container.clientWidth, container.clientHeight );
+      container.appendChild( renderer.domElement );
+  
+      render();
+
+    </script>
+  </body>
+</html>
